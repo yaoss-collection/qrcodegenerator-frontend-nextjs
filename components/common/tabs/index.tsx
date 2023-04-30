@@ -64,18 +64,17 @@ const Layout = ({ children }: TabProps) => {
   console.log(tabBackgroundHeight);
 
   return (
-    <div className="flex flex-col font-spline-sans text-6xl font-medium text-secondary lg:flex-row">
-      <nav className="scrolling-auto flex h-full max-w-full flex-row overflow-x-auto rounded-full border border-gray-100 shadow-md lg:ml-14 lg:mt-14 lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6">
+    <div className="mx-auto flex max-w-7xl flex-col bg-primary pt-24 font-spline-sans text-6xl font-medium text-secondary lg:flex-row">
+      <nav className="scrolling-auto flex h-full max-w-full snap-x flex-row overflow-x-auto rounded-full border border-gray-100 bg-white shadow-md lg:ml-14 lg:mt-14 lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6">
         <div className="relative flex-none">
           <motion.div
             layoutId="tab-background"
-            className="absolute right-0 w-full rounded-full bg-secondary transition-all duration-300 ease-in-out"
+            className="absolute right-0 w-full snap-center rounded-full bg-secondary transition-all duration-300 ease-in-out"
             style={{
               top: tabBackgroundTop,
               height: tabBackgroundHeight,
               width: tabBackgroundWidth,
               left: tabBackgroundLeft,
-              // shadow spreading to the bottom and blur
               boxShadow: '0px 11px 25px -2px rgba(0,40,138,0.52)',
             }}
           />
@@ -102,7 +101,7 @@ const Layout = ({ children }: TabProps) => {
           </div>
         </div>
       </nav>
-      {children}
+      <main className={'ml-0 lg:ml-20'}>{children}</main>
     </div>
   );
 };
