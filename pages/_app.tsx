@@ -1,3 +1,4 @@
+import Layout from '@/common/tabs';
 import '@/styles/globals.css';
 import ProgressBar from '@badrap/bar-of-progress';
 import { init } from '@socialgouv/matomo-next';
@@ -29,7 +30,13 @@ class MyApp extends App {
       Component,
       pageProps: { ...pageProps },
     } = this.props;
-    return <Component {...pageProps} />;
+    return (
+      <>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </>
+    );
   }
 }
 

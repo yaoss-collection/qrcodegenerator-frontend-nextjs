@@ -11,7 +11,9 @@ const Home: NextPage<{ seo: ICommon['seo'] }> = () => {
   return (
     <main>
       <Seo seo={seo} />
-      Text
+      <div className="flex h-screen items-center justify-center font-spline-sans text-6xl font-medium text-secondary">
+        {/* <TabComponent tabs={tabs} />*/}
+      </div>
     </main>
   );
 };

@@ -9,6 +9,15 @@ module.exports = {
       fontFamily: {
         'spline-sans': ['Spline Sans', 'sans-serif'],
       },
+      animation: {
+        'pulse-once': 'pulse 1s linear 1',
+      },
+      keyframes: {
+        pulse: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+        },
+      },
     },
   },
   plugins: [],
