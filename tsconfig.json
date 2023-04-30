@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": "./",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/typings/*": ["typings/*"],
+      "@/public/*": ["public/*"],
+      "@/common/*": ["components/common/*"],
+      "@/lib/*": ["lib/*"],
+      "@/styles/*": ["styles/*"],
+      "@/utils/*": ["components/utils/*"],
+      "@/homepage/*": ["components/homepage/*"],
+      "@/pet/*": ["components/pet/*"],
+      "@/pehd/*": ["components/pehd/*"],
+      "@/sacherie/*": ["components/sacherie/*"],
+      "@/societes/*": ["components/societes/*"],
+      "@/engagements/*": ["components/engagements/*"],
+      "@/contact/*": ["components/contact/*"],
+      "@/node/*": ["node_modules/*"]
+    },
+    "incremental": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/api.tsx.draft"],
+  "exclude": ["node_modules"]
+}
