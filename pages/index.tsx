@@ -1,6 +1,6 @@
 import Seo from '@/components/common/utils/seo';
-import TextGeneration from '@/components/textGeneration';
 import { ICommon } from '@/typings/typings';
+import Title from 'components/titleSection';
 import type { NextPage } from 'next';
 
 const Home: NextPage<{ seo: ICommon['seo'] }> = () => {
@@ -12,7 +12,7 @@ const Home: NextPage<{ seo: ICommon['seo'] }> = () => {
   return (
     <main>
       <Seo seo={seo} />
-      <TextGeneration />
+      <Title title={'Enter your text'} />
     </main>
   );
 };

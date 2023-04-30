@@ -1,5 +1,6 @@
 import Seo from '@/components/common/utils/seo';
 import { ICommon } from '@/typings/typings';
+import Title from 'components/titleSection';
 import type { NextPage } from 'next';
 
 const Home: NextPage<{ seo: ICommon['seo'] }> = () => {
@@ -11,9 +12,7 @@ const Home: NextPage<{ seo: ICommon['seo'] }> = () => {
   return (
     <main>
       <Seo seo={seo} />
-      <div className="flex h-screen items-center justify-center font-spline-sans text-6xl font-medium text-secondary">
-        {/* <TabComponent tabs={tabs} />*/}
-      </div>
+      <Title title={'Email'} />
     </main>
   );
 };
