@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@badrap/bar-of-progress": "^0.2.2",
+    "@headlessui/react": "^1.7.14",
     "@next/bundle-analyzer": "^13.3.2",
     "@socialgouv/matomo-next": "^1.6.1",
     "clsx": "^1.2.1",
@@ -26,7 +27,8 @@
     "framer-motion": "^10.12.4",
     "next": "13.3.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-qrcode-logo": "^2.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",

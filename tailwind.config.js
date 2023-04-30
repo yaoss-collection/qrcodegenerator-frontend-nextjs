@@ -5,6 +5,8 @@ module.exports = {
       colors: {
         primary: '#ecf7ff',
         secondary: '#00288a',
+        'secondary-light': '#113a9f',
+        'blue-light': '#1e49b3',
       },
       fontFamily: {
         'spline-sans': ['Spline Sans', 'sans-serif'],
