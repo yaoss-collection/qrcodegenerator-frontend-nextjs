@@ -11,8 +11,8 @@ const Home: NextPage<{ seo: ICommon['seo'] }> = () => {
   return (
     <main>
       <Seo seo={seo} />
-      <div className="flex h-screen items-center justify-center">
-        <h1>Nextjs Starter</h1>
+      <div className="flex h-screen items-center justify-center font-spline-sans text-6xl font-medium text-secondary">
+        <h1>Email</h1>
       </div>
     </main>
   );
