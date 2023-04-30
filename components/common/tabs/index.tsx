@@ -1,4 +1,6 @@
+import { EmailSvg } from '@/common/svgs/emailSvg';
 import { TextSvg } from '@/common/svgs/textSvg';
+import { WifiSvg } from '@/common/svgs/wifiSvg';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -12,13 +14,13 @@ const tabsData = [
     id: 'tab-1',
   },
   {
-    icon: TextSvg,
-    href: '/about',
+    icon: EmailSvg,
+    href: '/email',
     id: 'tab-2',
   },
   {
-    icon: TextSvg,
-    href: '/contact',
+    icon: WifiSvg,
+    href: '/wifi',
     id: 'tab-3',
   },
 ];
@@ -60,8 +62,6 @@ const Layout = ({ children }: TabProps) => {
       setActiveTabIndex(initialActiveTabIndex);
     }
   }, [pathname]);
-
-  console.log(tabBackgroundHeight);
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col bg-primary pt-24 font-spline-sans text-6xl font-medium text-secondary lg:flex-row">

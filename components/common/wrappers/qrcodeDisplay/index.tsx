@@ -1,28 +1,23 @@
 import QRCodeDisplay from '@/common/wrappers/qrcodeDisplay/qrCode';
 import Styles from '@/common/wrappers/qrcodeDisplay/styles';
-import { useState } from 'react';
-import { IProps } from 'react-qrcode-logo';
+import { QrStyleContext } from '@/context/index';
+import { useContext } from 'react';
 
 const QrCodeWrapper = () => {
-  const [qrStyle, setQrStyle] = useState<IProps['qrStyle']>('squares');
+  const { state } = useContext(QrStyleContext);
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl bg-secondary px-14 py-16 font-spline-sans">
-      <div className={'mx-auto px-10'}>
+    <div className="mx-auto flex w-11/12 flex-col items-center justify-center rounded-2xl bg-secondary px-14 py-16 font-spline-sans lg:mx-0 lg:w-auto">
+      <div className={'mx-auto lg:px-12'}>
         <QRCodeDisplay
           fgColor={'white'}
           bgColor={'transparent'}
           value={'test'}
           size={200}
-          qrStyle={qrStyle ?? 'squares'}
+          qrStyle={state.style}
         />
       </div>
 
-      <Styles
-        title={'Shape & Color'}
-        className={'mt-10 w-full'}
-        qrStyle={qrStyle}
-        setQrStyle={setQrStyle}
-      />
+      <Styles title={'Shape & Color'} className={'mt-10 w-full'} />
     </div>
   );
 };

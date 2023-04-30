@@ -5,6 +5,7 @@ import { init } from '@socialgouv/matomo-next';
 import { hasCookie } from 'cookies-next';
 import App from 'next/app';
 import { withRouter } from 'next/router';
+import { QrStyleProvider } from '../context';
 
 const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL;
 const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID;
@@ -31,11 +32,11 @@ class MyApp extends App {
       pageProps: { ...pageProps },
     } = this.props;
     return (
-      <>
+      <QrStyleProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </>
+      </QrStyleProvider>
     );
   }
 }

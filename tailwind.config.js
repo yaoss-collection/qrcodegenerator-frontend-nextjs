@@ -12,7 +12,7 @@ module.exports = {
         'spline-sans': ['Spline Sans', 'sans-serif'],
       },
       animation: {
-        'pulse-once': 'pulse 1s linear 1',
+        'pulse-once': 'pulse 350ms ease-in-out 1',
       },
       keyframes: {
         pulse: {

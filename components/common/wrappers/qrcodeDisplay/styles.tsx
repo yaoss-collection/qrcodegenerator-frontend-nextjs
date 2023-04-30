@@ -1,13 +1,11 @@
+import { QrStyleContext } from '@/context/index';
 import { Disclosure, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { useCallback } from 'react';
-import { IProps } from 'react-qrcode-logo';
+import { useContext } from 'react';
 
 type DetailsProps = {
   title: string;
   className: string;
-  setQrStyle: React.Dispatch<React.SetStateAction<IProps['qrStyle']>>;
-  qrStyle: IProps['qrStyle'];
 };
 
 type ButtonProps = {
@@ -16,13 +14,8 @@ type ButtonProps = {
   onClick?: () => void;
 };
 
-const Styles = ({ title, className, setQrStyle, qrStyle }: DetailsProps) => {
-  const handleStyleChange = useCallback(
-    (style: IProps['qrStyle']) => {
-      setQrStyle(style);
-    },
-    [setQrStyle]
-  );
+const Styles = ({ title, className }: DetailsProps) => {
+  const { state, dispatch } = useContext(QrStyleContext);
 
   return (
     <div className={className}>
@@ -31,9 +24,10 @@ const Styles = ({ title, className, setQrStyle, qrStyle }: DetailsProps) => {
           <>
             <Disclosure.Button
               className={clsx(
-                'flex w-full justify-between rounded-lg rounded-b-none bg-secondary-light py-2 py-5 pl-6 text-left text-sm text-white focus:outline-none focus-visible:ring focus-visible:ring-primary focus-visible:ring-opacity-75',
+                'flex w-full justify-between rounded-lg bg-secondary-light py-2 py-5 pl-6 text-left text-sm text-white focus:outline-none focus-visible:ring focus-visible:ring-primary focus-visible:ring-opacity-75',
                 {
                   'rounded-b-lg': !open,
+                  'rounded-b-none': open,
                 }
               )}
             >
@@ -55,13 +49,23 @@ const Styles = ({ title, className, setQrStyle, qrStyle }: DetailsProps) => {
                 >
                   <Button
                     title={'Squares'}
-                    active={qrStyle === 'squares'}
-                    onClick={() => handleStyleChange('squares')}
+                    active={state.style === 'squares'}
+                    onClick={() =>
+                      dispatch({
+                        type: 'SET_QR_STYLE',
+                        payload: { style: 'squares' },
+                      })
+                    }
                   />
                   <Button
                     title={'Dots'}
-                    active={qrStyle === 'dots'}
-                    onClick={() => handleStyleChange('dots')}
+                    active={state.style === 'dots'}
+                    onClick={() =>
+                      dispatch({
+                        type: 'SET_QR_STYLE',
+                        payload: { style: 'dots' },
+                      })
+                    }
                   />
                 </Disclosure.Panel>
               </Transition>
