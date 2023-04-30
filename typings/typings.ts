@@ -37,3 +37,7 @@ export interface ICommon {
     }[];
   };
 }
+
+export interface Github {
+  stars: number;
+}

@@ -22,14 +22,7 @@
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"],
       "@/utils/*": ["components/utils/*"],
-      "@/homepage/*": ["components/homepage/*"],
-      "@/pet/*": ["components/pet/*"],
-      "@/pehd/*": ["components/pehd/*"],
-      "@/sacherie/*": ["components/sacherie/*"],
-      "@/societes/*": ["components/societes/*"],
-      "@/engagements/*": ["components/engagements/*"],
-      "@/contact/*": ["components/contact/*"],
-      "@/node/*": ["node_modules/*"]
+      "@/homepage/*": ["components/homepage/*"]
     },
     "incremental": true
   },

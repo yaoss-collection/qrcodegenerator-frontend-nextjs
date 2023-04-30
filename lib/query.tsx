@@ -1,17 +1,26 @@
 interface IGraphQLQuery {
   query: string;
   variables?: object;
+  auth?: boolean;
+  token?: string;
+  github?: boolean;
 }
 
 export const graphFetchApi = {
-  async post<T>({ query, variables }: IGraphQLQuery): Promise<T> {
-    const response = await fetch(`${process.env.api}/graphql`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query, variables }),
-    });
+  async post<T>({ query, variables, auth, token, github }: IGraphQLQuery): Promise<T> {
+    const response = await fetch(
+      github
+        ? `${process.env.NEXT_PUBLIC_GITHUB_GRAPHQL_API}`
+        : `${process.env.NEXT_PUBLIC_STRAPI_URL}/graphql`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(auth && token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ query, variables }),
+      }
+    );
 
     const json = await response.json();
 
