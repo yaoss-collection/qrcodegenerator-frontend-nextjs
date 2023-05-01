@@ -1,39 +1,5 @@
 version: 2.1
 
-jobs:
-  analyze:
-    docker:
-      - image: sonarsource/sonar-scanner-cli:latest
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Run SonarQube Analysis
-          command: sonar-scanner -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectVersion=${CIRCLE_SHA1}
-      - run:
-          name: Check Quality Gate
-          command: sonar-scanner -Dsonar.login=${SONAR_TOKEN} -Dsonar.qualitygate.wait=true
-  build:
-    docker:
-      - image: cimg/node:18.16
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - run:
-          name: Run code style check
-          command: npm run style:all
-      - run:
-          name: Build App
-          command: npm run build
-
-workflows:
-  version: 2
-  build-and-analyze:
-    jobs:
-      - analyze
-      - build:
-          requires:
-            - analyze
+imports:
+  - config-analyze.yml
+  - config-add-link.yml
