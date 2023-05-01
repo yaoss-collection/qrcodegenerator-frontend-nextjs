@@ -15,7 +15,7 @@ jobs:
           script: |
             const { owner, repo, number } = context.issue;
             const prNumber = context.payload.pull_request.number;
-            const deploymentUrl = `https://${prNumber}.yaoss-collection.com/`;
+            const deploymentUrl = `https://${prNumber}.qrcode.yaoss-collection.com/`;
             const body = `Thanks for opening this PR! \n\nA deployment should be available at ${deploymentUrl} shortly.\n\nHave a great day!`;
             await github.rest.issues.createComment({
               owner,
