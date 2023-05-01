@@ -1,4 +1,7 @@
-import Styles from '@/common/wrappers/qrcodeDisplay/styles';
+import ColorSwitcher from '@/common/wrappers/qrcodeDisplay/colorSwitcher';
+import Details from '@/common/wrappers/qrcodeDisplay/details';
+import Shapes from '@/common/wrappers/qrcodeDisplay/shapes';
+import { ColorTypes } from '@/context/colorTypes';
 import { QrStyleContext } from '@/context/index';
 import QRCodeStyling, {
   CornerDotType,
@@ -33,11 +36,11 @@ const QRCode = () => {
       crossOrigin: 'anonymous',
     },
     dotsOptions: {
-      color: '#fff',
+      color: `${state.dotColor}` as ColorTypes['colors'],
       type: `${state.dotType}` as DotType,
     },
     backgroundOptions: {
-      color: 'transparent',
+      color: `${state.background}` as ColorTypes['colors'],
     },
     cornersSquareOptions: {
       color: '#fff',
@@ -69,9 +72,13 @@ const QRCode = () => {
       },
       dotsOptions: {
         type: `${state.dotType}` as DotType,
+        color: `${state.dotColor}` as ColorTypes['colors'],
+      },
+      backgroundOptions: {
+        color: `${state.background}` as ColorTypes['colors'],
       },
     });
-  }, [qrCode, state.style, state.dotType]);
+  }, [qrCode, state.style, state.dotType, state.background, state.dotColor]);
 
   // const onDataChange = (event: ChangeEvent<HTMLInputElement>) => {
   //   setOptions((options) => ({
@@ -93,9 +100,15 @@ const QRCode = () => {
 
   return (
     <>
-      <div className={'mx-auto flex justify-center lg:px-12'} ref={ref} />
+      <div className={'mx-auto flex justify-center pb-5 lg:px-12'} ref={ref} />
 
-      <Styles title={'Shape & Color'} />
+      <Details title={'Shape'}>
+        <Shapes />
+      </Details>
+      <Details title={'Colors'}>
+        <ColorSwitcher change={'background'} />
+        <ColorSwitcher change={'dotColor'} />
+      </Details>
       {/* <button className={'text-lg'} onClick={onDownloadClick}>*/}
       {/*  Download*/}
       {/* </button>*/}
