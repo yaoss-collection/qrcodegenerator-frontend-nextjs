@@ -102,7 +102,7 @@ const Layout = ({ children }: TabProps) => {
     >
       <nav
         className={
-          'scrolling-auto flex h-full max-w-full snap-x flex-row overflow-x-auto rounded-full border border-gray-100 bg-white shadow-md lg:ml-14 lg:mt-14 lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6'
+          'scrolling-auto flex h-full max-w-full snap-x flex-row overflow-x-auto rounded-full border border-gray-100 bg-white shadow-md lg:ml-14 lg:mt-14 lg:min-w-[5.5rem] lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6'
         }
       >
         <div className={'relative flex-none'}>

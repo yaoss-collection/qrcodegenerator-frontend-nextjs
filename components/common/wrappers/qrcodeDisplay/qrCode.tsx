@@ -34,7 +34,7 @@ const QRCode = () => {
     },
     dotsOptions: {
       color: '#fff',
-      type: 'square' as DotType,
+      type: `${state.dotType}` as DotType,
     },
     backgroundOptions: {
       color: 'transparent',
@@ -67,8 +67,11 @@ const QRCode = () => {
       cornersDotOptions: {
         type: `${state.style}` as CornerDotType,
       },
+      dotsOptions: {
+        type: `${state.dotType}` as DotType,
+      },
     });
-  }, [qrCode, state.style]);
+  }, [qrCode, state.style, state.dotType]);
 
   // const onDataChange = (event: ChangeEvent<HTMLInputElement>) => {
   //   setOptions((options) => ({
@@ -90,10 +93,9 @@ const QRCode = () => {
 
   return (
     <>
-      <div className={'mx-auto lg:px-12'}>
-        <div ref={ref} />
-      </div>
-      <Styles title={'Shape & Color'} className={'mt-10 w-full'} />
+      <div className={'mx-auto flex justify-center lg:px-12'} ref={ref} />
+
+      <Styles title={'Shape & Color'} />
       {/* <button className={'text-lg'} onClick={onDownloadClick}>*/}
       {/*  Download*/}
       {/* </button>*/}
