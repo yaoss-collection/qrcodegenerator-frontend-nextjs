@@ -51,12 +51,28 @@ const Layout = ({ children }: TabProps) => {
 
   const tabsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
+  const { pathname, events } = useRouter();
+
+  useEffect(() => {
+    const initialActiveTabIndex = tabsData.findIndex((tab) => tab.href === pathname);
+    if (initialActiveTabIndex !== -1) {
+      setState((prevState) => ({ ...prevState, activeTabIndex: initialActiveTabIndex }));
+      const currentTab = tabsRef.current[initialActiveTabIndex];
+      setState((prevState) => ({
+        ...prevState,
+        tabBackground: {
+          top: currentTab?.offsetTop ?? 0,
+          height: currentTab?.clientHeight ?? 0,
+          width: currentTab?.clientWidth ?? 0,
+          left: currentTab?.offsetLeft ?? 0,
+        },
+      }));
+    }
+  }, [pathname, tabsData]);
+
   useEffect(() => {
     function setTabPosition() {
-      const currentTab = tabsRef.current.find(
-        (tab) => tab?.id === tabsData[state.activeTabIndex].id
-      );
-
+      const currentTab = tabsRef.current[state.activeTabIndex];
       setState((prevState) => ({
         ...prevState,
         tabBackground: {
@@ -68,37 +84,43 @@ const Layout = ({ children }: TabProps) => {
       }));
     }
 
-    setTabPosition();
+    events.on('routeChangeComplete', setTabPosition);
+
     window.addEventListener('resize', setTabPosition);
 
-    return () => window.removeEventListener('resize', setTabPosition);
-  }, [state.activeTabIndex, tabsData]);
-
-  const { pathname } = useRouter();
-
-  useEffect(() => {
-    const initialActiveTabIndex = tabsData.findIndex((tab) => tab.href === pathname);
-    if (initialActiveTabIndex !== -1) {
-      setState((prevState) => ({ ...prevState, activeTabIndex: initialActiveTabIndex }));
-    }
-  }, [pathname, tabsData]);
+    return () => {
+      events.off('routeChangeComplete', setTabPosition);
+      window.removeEventListener('resize', setTabPosition);
+    };
+  }, [state.activeTabIndex, events]);
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col bg-primary pt-24 font-spline-sans text-6xl font-medium text-secondary lg:flex-row">
-      <nav className="scrolling-auto flex h-full max-w-full snap-x flex-row overflow-x-auto rounded-full border border-gray-100 bg-white shadow-md lg:ml-14 lg:mt-14 lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6">
-        <div className="relative flex-none">
+    <div
+      className={
+        'mx-auto flex max-w-7xl flex-col bg-primary pt-24 font-spline-sans text-6xl font-medium text-secondary lg:flex-row'
+      }
+    >
+      <nav
+        className={
+          'scrolling-auto flex h-full max-w-full snap-x flex-row overflow-x-auto rounded-full border border-gray-100 bg-white shadow-md lg:ml-14 lg:mt-14 lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6'
+        }
+      >
+        <div className={'relative flex-none'}>
           <motion.div
-            layoutId="tab-background"
-            className="absolute right-0 w-full snap-center rounded-full bg-secondary"
-            style={{
-              top: state.tabBackground.top,
-              height: state.tabBackground.height,
-              width: state.tabBackground.width,
-              left: state.tabBackground.left,
-              boxShadow: '0px 11px 25px -2px rgba(0,40,138,0.52)',
-            }}
+            layoutId={'tab-background'}
+            className={'absolute right-0 w-full snap-end rounded-full bg-secondary'}
+            animate={
+              state.activeTabIndex !== -1
+                ? {
+                    top: state.tabBackground.top,
+                    height: state.tabBackground.height,
+                    width: state.tabBackground.width,
+                    left: state.tabBackground.left,
+                  }
+                : {}
+            }
           />
-          <div className="mx-auto flex flex-row space-x-3 lg:flex-col lg:space-x-0 lg:space-y-3">
+          <div className={'mx-auto flex flex-row space-x-3 lg:flex-col lg:space-x-0 lg:space-y-3'}>
             {tabsData.map((tab, idx) => {
               return (
                 <Link
@@ -114,7 +136,7 @@ const Layout = ({ children }: TabProps) => {
                   )}
                   onClick={() => setState((prevState) => ({ ...prevState, activeTabIndex: idx }))}
                 >
-                  <div className={'w-10'}>{tab.icon}</div>
+                  <div className={'w-6 lg:w-5'}>{tab.icon}</div>
                 </Link>
               );
             })}
