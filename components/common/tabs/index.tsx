@@ -5,63 +5,77 @@ import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-const tabsData = [
-  {
-    icon: TextSvg,
-    href: '/',
-    id: 'tab-1',
-  },
-  {
-    icon: EmailSvg,
-    href: '/email',
-    id: 'tab-2',
-  },
-  {
-    icon: WifiSvg,
-    href: '/wifi',
-    id: 'tab-3',
-  },
-];
+interface Tab {
+  icon: React.ReactNode;
+  href: string;
+  id: string;
+}
 
 type TabProps = {
   children?: React.ReactNode;
 };
 
 const Layout = ({ children }: TabProps) => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [tabBackgroundTop, setTabBackgroundTop] = useState(0);
-  const [tabBackgroundHeight, setTabBackgroundHeight] = useState(0);
-  const [tabBackgroundWidth, setTabBackgroundWidth] = useState(0);
-  const [tabBackgroundLeft, setTabBackgroundLeft] = useState(0);
+  const tabsData: Tab[] = useMemo(
+    () => [
+      {
+        icon: TextSvg,
+        href: '/',
+        id: 'tab-1',
+      },
+      {
+        icon: EmailSvg,
+        href: '/email',
+        id: 'tab-2',
+      },
+      {
+        icon: WifiSvg,
+        href: '/wifi',
+        id: 'tab-3',
+      },
+    ],
+    []
+  );
+  const [state, setState] = useState({
+    activeTabIndex: 0,
+    tabBackground: { top: 0, height: 0, width: 0, left: 0 },
+  });
 
   const tabsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
     function setTabPosition() {
-      const currentTab = tabsRef.current.find((tab) => tab?.id === tabsData[activeTabIndex].id);
+      const currentTab = tabsRef.current.find(
+        (tab) => tab?.id === tabsData[state.activeTabIndex].id
+      );
 
-      setTabBackgroundTop(currentTab?.offsetTop ?? 0);
-      setTabBackgroundHeight(currentTab?.clientHeight ?? 0);
-      setTabBackgroundWidth(currentTab?.clientWidth ?? 0);
-      setTabBackgroundLeft(currentTab?.offsetLeft ?? 0);
+      setState((prevState) => ({
+        ...prevState,
+        tabBackground: {
+          top: currentTab?.offsetTop ?? 0,
+          height: currentTab?.clientHeight ?? 0,
+          width: currentTab?.clientWidth ?? 0,
+          left: currentTab?.offsetLeft ?? 0,
+        },
+      }));
     }
 
     setTabPosition();
     window.addEventListener('resize', setTabPosition);
 
     return () => window.removeEventListener('resize', setTabPosition);
-  }, [activeTabIndex]);
+  }, [state.activeTabIndex, tabsData]);
 
   const { pathname } = useRouter();
 
   useEffect(() => {
     const initialActiveTabIndex = tabsData.findIndex((tab) => tab.href === pathname);
     if (initialActiveTabIndex !== -1) {
-      setActiveTabIndex(initialActiveTabIndex);
+      setState((prevState) => ({ ...prevState, activeTabIndex: initialActiveTabIndex }));
     }
-  }, [pathname]);
+  }, [pathname, tabsData]);
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col bg-primary pt-24 font-spline-sans text-6xl font-medium text-secondary lg:flex-row">
@@ -71,10 +85,10 @@ const Layout = ({ children }: TabProps) => {
             layoutId="tab-background"
             className="absolute right-0 w-full snap-center rounded-full bg-secondary transition-all duration-300 ease-in-out"
             style={{
-              top: tabBackgroundTop,
-              height: tabBackgroundHeight,
-              width: tabBackgroundWidth,
-              left: tabBackgroundLeft,
+              top: state.tabBackground.top,
+              height: state.tabBackground.height,
+              width: state.tabBackground.width,
+              left: state.tabBackground.left,
               boxShadow: '0px 11px 25px -2px rgba(0,40,138,0.52)',
             }}
           />
@@ -88,11 +102,11 @@ const Layout = ({ children }: TabProps) => {
                   id={tab.id}
                   className={clsx(
                     'flex items-center justify-center rounded-full p-10 transition-colors duration-300 ease-in-out lg:p-4',
-                    activeTabIndex === idx || pathname === tab.href
+                    pathname === tab.href || state.activeTabIndex === idx
                       ? 'z-50 animate-pulse-once font-bold text-white'
                       : 'font-medium'
                   )}
-                  onClick={() => setActiveTabIndex(idx)}
+                  onClick={() => setState((prevState) => ({ ...prevState, activeTabIndex: idx }))}
                 >
                   <div className={'w-10'}>{tab.icon}</div>
                 </Link>
