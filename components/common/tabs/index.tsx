@@ -119,6 +119,9 @@ const Layout = ({ children }: TabProps) => {
                   }
                 : {}
             }
+            style={{
+              boxShadow: 'rgba(0, 40, 138, 0.52) 0px 11px 25px -2px',
+            }}
           />
           <div className={'mx-auto flex flex-row space-x-3 lg:flex-col lg:space-x-0 lg:space-y-3'}>
             {tabsData.map((tab, idx) => {
