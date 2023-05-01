@@ -49,21 +49,21 @@ const Styles = ({ title, className }: DetailsProps) => {
                 >
                   <Button
                     title={'Squares'}
-                    active={state.style === 'squares'}
+                    active={state.style === 'square'}
                     onClick={() =>
                       dispatch({
                         type: 'SET_QR_STYLE',
-                        payload: { style: 'squares' },
+                        payload: { style: 'square' },
                       })
                     }
                   />
                   <Button
                     title={'Dots'}
-                    active={state.style === 'dots'}
+                    active={state.style === 'dot'}
                     onClick={() =>
                       dispatch({
                         type: 'SET_QR_STYLE',
-                        payload: { style: 'dots' },
+                        payload: { style: 'dot' },
                       })
                     }
                   />

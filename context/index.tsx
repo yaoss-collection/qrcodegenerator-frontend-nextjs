@@ -1,20 +1,21 @@
+import { CornerSquareType } from 'qr-code-styling';
 import React, { createContext, useMemo, useReducer } from 'react';
 import { IProps } from 'react-qrcode-logo';
 
 const initialState: IState = {
-  style: 'squares',
+  style: 'square',
   value: "I'm EMPTY",
 };
 
 interface IState {
-  style: IProps['qrStyle'];
+  style?: CornerSquareType;
   value: IProps['value'];
 }
 
 type Actions = 'SET_QR_STYLE' | 'SET_QR_VALUE';
 interface IAction {
   type: Actions;
-  payload: { style?: IProps['qrStyle']; value?: IProps['value'] };
+  payload: { style?: CornerSquareType; value?: IProps['value'] };
 }
 
 interface IContextProps {

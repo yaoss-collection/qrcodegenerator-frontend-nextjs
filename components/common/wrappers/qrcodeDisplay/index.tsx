@@ -1,23 +1,29 @@
-import QRCodeDisplay from '@/common/wrappers/qrcodeDisplay/qrCode';
-import Styles from '@/common/wrappers/qrcodeDisplay/styles';
-import { QrStyleContext } from '@/context/index';
-import { useContext } from 'react';
+import { Transition } from '@headlessui/react';
+import dynamic from 'next/dynamic';
+import React, { useEffect, useState } from 'react';
+
+const QrCode = dynamic(() => import('@/common/wrappers/qrcodeDisplay/qrCode'), {
+  ssr: false,
+});
 
 const QrCodeWrapper = () => {
-  const { state } = useContext(QrStyleContext);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   return (
-    <div className="mx-auto flex w-11/12 flex-col items-center justify-center rounded-2xl bg-secondary px-14 py-16 font-spline-sans lg:mx-0 lg:w-auto">
-      <div className={'mx-auto lg:px-12'}>
-        <QRCodeDisplay
-          fgColor={'white'}
-          bgColor={'transparent'}
-          value={'test'}
-          size={200}
-          qrStyle={state.style}
-        />
-      </div>
-
-      <Styles title={'Shape & Color'} className={'mt-10 w-full'} />
+    <div className="mx-auto flex w-11/12 flex-col items-center justify-center rounded-2xl bg-secondary px-14 py-16 font-spline-sans lg:mx-0 lg:min-h-[471px] lg:w-auto lg:min-w-[423px]">
+      <Transition
+        enter={'transition duration-100 ease-out'}
+        enterFrom={'transform translate-y-1/4 opacity-100'}
+        enterTo={'transform -translate-y-0 opacity-100'}
+        leave={'transition duration-300 ease-out'}
+        leaveFrom={'transform translate-y-0 opacity-100'}
+        leaveTo={'transform -translate-y-1/4 opacity-0'}
+        show={isMounted}
+      >
+        <QrCode />
+      </Transition>
     </div>
   );
 };

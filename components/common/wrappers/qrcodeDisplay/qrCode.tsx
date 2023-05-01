@@ -1,25 +1,104 @@
-import { IProps, QRCode } from 'react-qrcode-logo';
+import Styles from '@/common/wrappers/qrcodeDisplay/styles';
+import { QrStyleContext } from '@/context/index';
+import QRCodeStyling, {
+  CornerDotType,
+  CornerSquareType,
+  DotType,
+  DrawType,
+  ErrorCorrectionLevel,
+  Mode,
+  Options,
+  TypeNumber,
+} from 'qr-code-styling';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
-type QRCodeProps = IProps & {
-  hasLogo?: boolean;
-};
+const QRCode = () => {
+  const { state } = useContext(QrStyleContext);
+  const [options] = useState<Options>({
+    width: 215,
+    height: 215,
+    type: 'svg' as DrawType,
+    data: `${state.value}`,
+    image: '/favicon.ico',
+    margin: 10,
+    qrOptions: {
+      typeNumber: 0 as TypeNumber,
+      mode: 'Byte' as Mode,
+      errorCorrectionLevel: 'Q' as ErrorCorrectionLevel,
+    },
+    imageOptions: {
+      hideBackgroundDots: true,
+      imageSize: 0.4,
+      margin: 20,
+      crossOrigin: 'anonymous',
+    },
+    dotsOptions: {
+      color: '#fff',
+      type: 'square' as DotType,
+    },
+    backgroundOptions: {
+      color: 'transparent',
+    },
+    cornersSquareOptions: {
+      color: '#fff',
+      type: `${state.style}` as CornerSquareType,
+    },
+    cornersDotOptions: {
+      color: '#fff',
+      type: `${state.style}` as CornerDotType,
+    },
+  });
+  // const [fileExt, setFileExt] = useState('svg');
+  const [qrCode] = useState<QRCodeStyling>(new QRCodeStyling(options));
+  const ref = useRef<HTMLDivElement>(null);
 
-const QRCodeDisplay = ({ hasLogo, ...props }: QRCodeProps) => {
+  useEffect(() => {
+    if (ref.current) {
+      qrCode.append(ref.current);
+    }
+  }, [qrCode, ref]);
+
+  useEffect(() => {
+    if (!qrCode) return;
+    qrCode.update({
+      cornersSquareOptions: {
+        type: `${state.style}` as CornerSquareType,
+      },
+      cornersDotOptions: {
+        type: `${state.style}` as CornerDotType,
+      },
+    });
+  }, [qrCode, state.style]);
+
+  // const onDataChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setOptions((options) => ({
+  //     ...options,
+  //     data: event.target.value,
+  //   }));
+  // };
+  //
+  // const onExtensionChange = (event: ChangeEvent<HTMLSelectElement>) => {
+  //   setFileExt(event.target.value);
+  // };
+
+  // const onDownloadClick = () => {
+  //   if (!qrCode) return;
+  //   qrCode.download({
+  //     extension: fileExt as FileExtension,
+  //   });
+  // };
+
   return (
-    <QRCode
-      value={props.value}
-      size={props.size}
-      bgColor={props.bgColor}
-      fgColor={props.fgColor}
-      logoWidth={props.logoWidth}
-      logoHeight={props.logoHeight}
-      logoOpacity={props.logoOpacity}
-      qrStyle={props.qrStyle}
-      {...(hasLogo && {
-        logoImage: props.logoImage,
-      })}
-    />
+    <>
+      <div className={'mx-auto lg:px-12'}>
+        <div ref={ref} />
+      </div>
+      <Styles title={'Shape & Color'} className={'mt-10 w-full'} />
+      {/* <button className={'text-lg'} onClick={onDownloadClick}>*/}
+      {/*  Download*/}
+      {/* </button>*/}
+    </>
   );
 };
 
-export default QRCodeDisplay;
+export default QRCode;
