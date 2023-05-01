@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add PR comment
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.PR_TOKEN }}
           script: |
@@ -17,8 +17,7 @@ jobs:
             const prNumber = context.payload.pull_request.number;
             const deploymentUrl = `https://${prNumber}.yaoss-collection.com/`;
             const body = `Thanks for opening this PR! \n\nA deployment is available at ${deploymentUrl}.`;
-            const octokit = new Octokit();
-            await octokit.issues.createComment({
+            await github.issues.createComment({
               owner,
               repo,
               issue_number: number,
