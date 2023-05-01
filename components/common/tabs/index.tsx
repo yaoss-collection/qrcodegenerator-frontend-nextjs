@@ -119,6 +119,12 @@ const Layout = ({ children }: TabProps) => {
                   }
                 : {}
             }
+            transition={{
+              type: 'spring',
+              stiffness: state.activeTabIndex !== -1 ? 500 : 0,
+              // damping is the speed of the animation
+              damping: state.activeTabIndex !== -1 ? 30 : 0,
+            }}
             style={{
               boxShadow: 'rgba(0, 40, 138, 0.52) 0px 11px 25px -2px',
             }}
