@@ -1,5 +1,6 @@
 import { EmailSvg } from '@/common/svgs/emailSvg';
 import { TextSvg } from '@/common/svgs/textSvg';
+import { VCardSvg } from '@/common/svgs/vCardSvg';
 import { WifiSvg } from '@/common/svgs/wifiSvg';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
@@ -34,6 +35,11 @@ const Layout = ({ children }: TabProps) => {
         icon: WifiSvg,
         href: '/wifi',
         id: 'tab-3',
+      },
+      {
+        icon: VCardSvg,
+        href: '/vcard',
+        id: 'tab-4',
       },
     ],
     []
@@ -83,7 +89,7 @@ const Layout = ({ children }: TabProps) => {
         <div className="relative flex-none">
           <motion.div
             layoutId="tab-background"
-            className="absolute right-0 w-full snap-center rounded-full bg-secondary transition-all duration-300 ease-in-out"
+            className="absolute right-0 w-full snap-center rounded-full bg-secondary"
             style={{
               top: state.tabBackground.top,
               height: state.tabBackground.height,
