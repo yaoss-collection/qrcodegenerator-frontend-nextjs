@@ -12,7 +12,7 @@ const Wifi: NextPage<{ seo: ICommon['seo'] }> = () => {
   return (
     <main>
       <Seo seo={seo} />
-      <Title title="Wifi" />
+      <Title title="Wifi" typeOfInput={'wifi'} />
     </main>
   );
 };

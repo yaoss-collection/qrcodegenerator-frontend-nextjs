@@ -12,7 +12,7 @@ const Email: NextPage<{ seo: ICommon['seo'] }> = () => {
   return (
     <main>
       <Seo seo={seo} />
-      <Title title={'Email'} />
+      <Title title={'Email'} typeOfInput={'email'} />
     </main>
   );
 };

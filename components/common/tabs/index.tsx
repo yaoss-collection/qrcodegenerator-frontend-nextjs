@@ -2,11 +2,12 @@ import { EmailSvg } from '@/common/svgs/emailSvg';
 import { TextSvg } from '@/common/svgs/textSvg';
 import { VCardSvg } from '@/common/svgs/vCardSvg';
 import { WifiSvg } from '@/common/svgs/wifiSvg';
+import { QrStyleContext } from '@/context/index';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 interface Tab {
   icon: React.ReactNode;
@@ -19,6 +20,7 @@ type TabProps = {
 };
 
 const Layout = ({ children }: TabProps) => {
+  const { dispatch } = useContext(QrStyleContext);
   const tabsData: Tab[] = useMemo(
     () => [
       {
@@ -86,13 +88,16 @@ const Layout = ({ children }: TabProps) => {
 
     events.on('routeChangeComplete', setTabPosition);
 
+    // This will reset the value of the QR code to "I'm EMPTY" when the user switches tabs
+    dispatch({ type: 'SET_QR_VALUE', payload: { value: "I'm EMPTY" } });
+
     window.addEventListener('resize', setTabPosition);
 
     return () => {
       events.off('routeChangeComplete', setTabPosition);
       window.removeEventListener('resize', setTabPosition);
     };
-  }, [state.activeTabIndex, events]);
+  }, [state.activeTabIndex, events, dispatch]);
 
   return (
     <div
