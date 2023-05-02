@@ -53,7 +53,7 @@ const Layout = ({ children }: TabProps) => {
 
   const tabsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
-  const { pathname, events } = useRouter();
+  const { pathname } = useRouter();
 
   useEffect(() => {
     const initialActiveTabIndex = tabsData.findIndex((tab) => tab.href === pathname);
@@ -69,35 +69,9 @@ const Layout = ({ children }: TabProps) => {
           left: currentTab?.offsetLeft ?? 0,
         },
       }));
+      dispatch({ type: 'SET_QR_VALUE', payload: { value: "I'm EMPTY" } });
     }
-  }, [pathname, tabsData]);
-
-  useEffect(() => {
-    function setTabPosition() {
-      const currentTab = tabsRef.current[state.activeTabIndex];
-      setState((prevState) => ({
-        ...prevState,
-        tabBackground: {
-          top: currentTab?.offsetTop ?? 0,
-          height: currentTab?.clientHeight ?? 0,
-          width: currentTab?.clientWidth ?? 0,
-          left: currentTab?.offsetLeft ?? 0,
-        },
-      }));
-    }
-
-    events.on('routeChangeComplete', setTabPosition);
-
-    // This will reset the value of the QR code to "I'm EMPTY" when the user switches tabs
-    dispatch({ type: 'SET_QR_VALUE', payload: { value: "I'm EMPTY" } });
-
-    window.addEventListener('resize', setTabPosition);
-
-    return () => {
-      events.off('routeChangeComplete', setTabPosition);
-      window.removeEventListener('resize', setTabPosition);
-    };
-  }, [state.activeTabIndex, events, dispatch]);
+  }, [pathname, tabsData, dispatch]);
 
   return (
     <div
