@@ -33,7 +33,8 @@ const ColorSwitcher = ({ change }: BackgroundColorsProps) => {
       const isColorPicker = true;
       const resettable =
         (change === 'background' && color === 'transparent') ||
-        (change === 'dotColor' && color === '#FFFFFF');
+        (change === 'dotColor' && color === '#FFFFFF') ||
+        (change === 'eyeColor' && color === '#FFFFFF');
       const active = state[change] === color;
 
       const onClick = () => {
