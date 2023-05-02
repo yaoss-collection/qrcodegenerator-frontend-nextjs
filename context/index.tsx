@@ -8,6 +8,7 @@ const initialState: IState = {
   dotType: 'square',
   background: 'transparent',
   dotColor: '#FFFFFF',
+  eyeColor: '#FFFFFF',
   value: "I'm EMPTY",
 };
 
@@ -16,6 +17,7 @@ export interface IState {
   dotType?: DotType;
   background?: ColorTypes['colors'];
   dotColor?: ColorTypes['colors'];
+  eyeColor?: ColorTypes['colors'];
   value: IProps['value'];
 }
 
@@ -25,6 +27,7 @@ type Actions =
   | 'SET_QR_DOT_TYPE'
   | 'SET_QR_BACKGROUND'
   | 'SET_QR_DOT_COLOR'
+  | 'SET_QR_EYE_COLOR'
   | `SET_QR_${string}`;
 export interface IAction {
   type: Actions;
@@ -34,6 +37,7 @@ export interface IAction {
     dotType?: DotType;
     background?: ColorTypes['colors'];
     dotColor?: ColorTypes['colors'];
+    eyeColor?: ColorTypes['colors'];
   };
 }
 
@@ -76,6 +80,11 @@ const reducer = (state: IState, action: IAction) => {
       return {
         ...state,
         dotColor: action.payload.dotColor,
+      };
+    case 'SET_QR_EYECOLOR':
+      return {
+        ...state,
+        eyeColor: action.payload.eyeColor,
       };
     default:
       return state;
