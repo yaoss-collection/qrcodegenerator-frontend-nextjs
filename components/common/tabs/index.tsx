@@ -73,6 +73,27 @@ const Layout = ({ children }: TabProps) => {
     }
   }, [pathname, tabsData, dispatch]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const currentTab = tabsRef.current[state.activeTabIndex];
+      setState((prevState) => ({
+        ...prevState,
+        tabBackground: {
+          top: currentTab?.offsetTop ?? 0,
+          height: currentTab?.clientHeight ?? 0,
+          width: currentTab?.clientWidth ?? 0,
+          left: currentTab?.offsetLeft ?? 0,
+        },
+      }));
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [state.activeTabIndex]);
+
   return (
     <div
       className={
