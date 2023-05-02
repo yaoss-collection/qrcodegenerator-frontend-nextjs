@@ -1,10 +1,10 @@
 import { Button } from '@/common/wrappers/qrcodeDisplay/details';
 import { ColorTypes, colorNames } from '@/context/colorTypes';
-import { QrStyleContext } from '@/context/index';
+import { IAction, QrStyleContext } from '@/context/index';
 import React, { useContext, useMemo } from 'react';
 
 type BackgroundColorsProps = {
-  change: 'background' | 'dotColor';
+  change: 'background' | 'dotColor' | 'eyeColor';
 };
 
 const ColorSwitcher = ({ change }: BackgroundColorsProps) => {
@@ -34,39 +34,47 @@ const ColorSwitcher = ({ change }: BackgroundColorsProps) => {
       const resettable =
         (change === 'background' && color === 'transparent') ||
         (change === 'dotColor' && color === '#FFFFFF');
-
       const active = state[change] === color;
 
-      const onClick = () =>
-        dispatch({
-          type: `SET_QR_${change.toUpperCase()}`,
-          payload: { [change]: color },
-        });
+      const onClick = () => {
+        const payload = { [change]: color };
+        const actionType = `SET_QR_${change.toUpperCase()}`;
+        dispatch({ type: actionType, payload } as IAction);
+      };
 
       return { title, isColorPicker, resettable, color, active, onClick };
     });
   }, [change, colors, state, dispatch]);
 
+  const label = useMemo(() => {
+    switch (change) {
+      case 'background':
+        return 'Background';
+      case 'dotColor':
+        return 'Dot Color';
+      case 'eyeColor':
+        return 'Eye Color';
+    }
+  }, [change]);
+
+  const colorButtonsJSX = colorButtons.map((button) => (
+    <Button
+      key={button.color}
+      isColorPicker={button.isColorPicker}
+      resettable={button.resettable}
+      title={button.title}
+      color={button.color}
+      active={button.active}
+      onClick={button.onClick}
+    />
+  ));
+
   return (
     <>
-      <p className={'mb-3'}>
-        <span className={'text-xs font-semibold uppercase text-white'}>
-          {change === 'background' ? 'Background Color' : 'Dot Color'}
-        </span>
+      <p className="mb-3">
+        <span className="text-xs font-semibold uppercase text-white">{label}</span>
       </p>
-      <div className={'flex flex-wrap justify-center gap-x-0 gap-y-3'}>
-        {colorButtons.map((button) => (
-          <Button
-            key={button.color}
-            isColorPicker={button.isColorPicker}
-            resettable={button.resettable}
-            title={button.title}
-            color={button.color}
-            active={button.active}
-            onClick={button.onClick}
-          />
-        ))}
-      </div>
+      <div className="flex flex-wrap justify-center gap-x-0 gap-y-3">{colorButtonsJSX}</div>
     </>
   );
 };

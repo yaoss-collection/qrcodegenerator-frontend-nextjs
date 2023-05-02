@@ -43,11 +43,11 @@ const QRCode = () => {
       color: `${state.background}` as ColorTypes['colors'],
     },
     cornersSquareOptions: {
-      color: '#fff',
+      color: `${state.eyeColor}` as ColorTypes['colors'],
       type: `${state.style}` as CornerSquareType,
     },
     cornersDotOptions: {
-      color: '#fff',
+      color: `${state.eyeColor}` as ColorTypes['colors'],
       type: `${state.style}` as CornerDotType,
     },
   });
@@ -65,9 +65,11 @@ const QRCode = () => {
     if (!qrCode) return;
     qrCode.update({
       cornersSquareOptions: {
+        color: `${state.eyeColor}` as ColorTypes['colors'],
         type: `${state.style}` as CornerSquareType,
       },
       cornersDotOptions: {
+        color: `${state.eyeColor}` as ColorTypes['colors'],
         type: `${state.style}` as CornerDotType,
       },
       dotsOptions: {
@@ -78,7 +80,7 @@ const QRCode = () => {
         color: `${state.background}` as ColorTypes['colors'],
       },
     });
-  }, [qrCode, state.style, state.dotType, state.background, state.dotColor]);
+  }, [qrCode, state.style, state.dotType, state.background, state.dotColor, state.eyeColor]);
 
   // const onDataChange = (event: ChangeEvent<HTMLInputElement>) => {
   //   setOptions((options) => ({
@@ -108,6 +110,7 @@ const QRCode = () => {
       <Details title={'Colors'}>
         <ColorSwitcher change={'background'} />
         <ColorSwitcher change={'dotColor'} />
+        <ColorSwitcher change={'eyeColor'} />
       </Details>
       {/* <button className={'text-lg'} onClick={onDownloadClick}>*/}
       {/*  Download*/}
