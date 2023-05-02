@@ -1,4 +1,5 @@
 import Details from '@/common/wrappers/qrcodeDisplay/details';
+import FileInput from '@/common/wrappers/qrcodeDisplay/inputFile';
 import ShapesSwitcher from '@/common/wrappers/qrcodeDisplay/shapesSwitcher';
 import { ColorsTabs } from '@/common/wrappers/qrcodeDisplay/tabs/colorsTabs';
 import { ColorTypes } from '@/context/colorTypes';
@@ -16,7 +17,7 @@ import QRCodeStyling, {
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
 const QRCode = () => {
-  const { dispatch, state } = useContext(QrStyleContext);
+  const { state } = useContext(QrStyleContext);
 
   const toBase64 = (file: File) => {
     return new Promise<string>((resolve, reject) => {
@@ -86,6 +87,11 @@ const QRCode = () => {
         });
       }
     }
+    if (state.logoImage === '') {
+      qrCode.update({
+        image: '',
+      });
+    }
     qrCode.update({
       data: `${state.value}`,
       cornersSquareOptions: {
@@ -133,15 +139,6 @@ const QRCode = () => {
   //   });
   // };
 
-  const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    dispatch({
-      type: 'SET_QR_LOGO_IMAGE',
-      payload: { logoImage: file },
-    });
-  };
-
   return (
     <>
       <div className={'mx-auto flex justify-center pb-5 lg:px-12'} ref={ref} />
@@ -152,7 +149,7 @@ const QRCode = () => {
         <ColorsTabs />
       </Details>
       <Details title={'Logo'}>
-        <input type={'file'} onChange={onFileUpload} />
+        <FileInput />
       </Details>
       {/* <button className={'text-lg'} onClick={onDownloadClick}>*/}
       {/*  Download*/}
