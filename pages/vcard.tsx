@@ -12,7 +12,7 @@ const VCard: NextPage<{ seo: ICommon['seo'] }> = () => {
   return (
     <main>
       <Seo seo={seo} />
-      <Title title={'VCard'} />
+      <Title title={'VCard'} typeOfInput={'vCard'} />
     </main>
   );
 };

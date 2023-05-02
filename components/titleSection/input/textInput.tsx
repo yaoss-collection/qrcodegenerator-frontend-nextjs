@@ -2,7 +2,7 @@ import { QrStyleContext } from '@/context/index';
 import TextField from '@mui/material/TextField';
 import { useContext, useEffect, useState } from 'react';
 
-const Input = () => {
+const TextInput = () => {
   const { state, dispatch } = useContext(QrStyleContext);
   const [debouncedValue, setDebouncedValue] = useState(state.value);
 
@@ -31,10 +31,11 @@ const Input = () => {
         onChange={handleChange}
         defaultValue={debouncedValue === "I'm EMPTY" ? '' : debouncedValue}
         fullWidth={true}
+        type={'text'}
       />
       <p className={'mt-3 text-sm text-light'}>Your QR code will be generated automatically</p>
     </div>
   );
 };
 
-export default Input;
+export default TextInput;
