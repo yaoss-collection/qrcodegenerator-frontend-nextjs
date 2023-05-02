@@ -2,6 +2,10 @@
 
 A QR code generator that is fully open source and built with Next.js, TypeScript, and Tailwind. The generator is designed to be fast, easy to use, and does not require users to sign in or create an account.
 
+[Live Demo](https://qrcodegenerator.yaoss.io)
+
+![screenshot](/screenshot.png)
+
 ## Features
 
 - Generate QR codes for text, URLs, phone numbers, SMS, email addresses, and more
