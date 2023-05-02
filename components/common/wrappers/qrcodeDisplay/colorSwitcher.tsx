@@ -47,17 +47,6 @@ const ColorSwitcher = ({ change }: BackgroundColorsProps) => {
     });
   }, [change, colors, state, dispatch]);
 
-  const label = useMemo(() => {
-    switch (change) {
-      case 'background':
-        return 'Background';
-      case 'dotColor':
-        return 'Dot Color';
-      case 'eyeColor':
-        return 'Eye Color';
-    }
-  }, [change]);
-
   const colorButtonsJSX = colorButtons.map((button) => (
     <Button
       key={button.color}
@@ -72,9 +61,6 @@ const ColorSwitcher = ({ change }: BackgroundColorsProps) => {
 
   return (
     <>
-      <p className="mb-3">
-        <span className="text-xs font-semibold uppercase text-white">{label}</span>
-      </p>
       <div className="flex flex-wrap justify-center gap-x-0 gap-y-3">{colorButtonsJSX}</div>
     </>
   );
