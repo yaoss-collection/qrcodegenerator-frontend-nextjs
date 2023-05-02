@@ -68,6 +68,7 @@ const QRCode = () => {
   useEffect(() => {
     if (!qrCode) return;
     qrCode.update({
+      data: `${state.value}`,
       cornersSquareOptions: {
         color: `${state.eyeColor}` as ColorTypes['colors'],
         type: `${state.style}` as CornerSquareType,
@@ -84,7 +85,15 @@ const QRCode = () => {
         color: `${state.background}` as ColorTypes['colors'],
       },
     });
-  }, [qrCode, state.style, state.dotType, state.background, state.dotColor, state.eyeColor]);
+  }, [
+    qrCode,
+    state.style,
+    state.dotType,
+    state.background,
+    state.dotColor,
+    state.eyeColor,
+    state.value,
+  ]);
 
   // const onDataChange = (event: ChangeEvent<HTMLInputElement>) => {
   //   setOptions((options) => ({
