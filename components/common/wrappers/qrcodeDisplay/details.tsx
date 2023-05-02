@@ -132,6 +132,8 @@ export const Button = ({
         }}
         className={clsx('w-full', {
           'text-black': isColorPicker && color === '#FFFFFF',
+          // prevents the checkmark from being visible when active is false
+          'text-transparent': !active,
         })}
       >
         {<CheckMarkSvg />}
