@@ -31,8 +31,7 @@
     "next": "13.3.2",
     "qr-code-styling": "^1.6.0-rc.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-qrcode-logo": "^2.9.0"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",
