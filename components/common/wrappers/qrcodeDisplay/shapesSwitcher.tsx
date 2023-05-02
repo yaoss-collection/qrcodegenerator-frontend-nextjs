@@ -3,7 +3,7 @@ import { QrStyleContext } from '@/context/index';
 import { Transition } from '@headlessui/react';
 import { useContext } from 'react';
 
-const Shapes = () => {
+const ShapesSwitcher = () => {
   const { state, dispatch } = useContext(QrStyleContext);
   return (
     <>
@@ -88,4 +88,4 @@ const Shapes = () => {
   );
 };
 
-export default Shapes;
+export default ShapesSwitcher;

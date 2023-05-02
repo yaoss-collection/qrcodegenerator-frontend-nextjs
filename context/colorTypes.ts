@@ -24,17 +24,3 @@ export interface ColorTypes {
     | 'White'
     | 'Black';
 }
-
-export const colorNames: Record<ColorTypes['colors'], ColorTypes['colorNames']> = {
-  transparent: 'Transparent',
-  '#1F2937': 'Gray',
-  '#9B2C2C': 'Red',
-  '#D97706': 'Yellow',
-  '#22543D': 'Green',
-  '#1D4ED8': 'Blue',
-  '#4F46E5': 'Indigo',
-  '#7C3AED': 'Purple',
-  '#E11D8F': 'Pink',
-  '#FFFFFF': 'White',
-  '#000000': 'Black',
-};
