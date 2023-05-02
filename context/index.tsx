@@ -1,7 +1,6 @@
 import { ColorTypes } from '@/context/colorTypes';
 import { CornerSquareType, DotType } from 'qr-code-styling';
 import React, { createContext, useMemo, useReducer } from 'react';
-import { IProps } from 'react-qrcode-logo';
 
 const initialState: IState = {
   style: 'square',
@@ -10,6 +9,7 @@ const initialState: IState = {
   dotColor: '#FFFFFF',
   eyeColor: '#FFFFFF',
   value: "I'm EMPTY",
+  logoImage: '',
 };
 
 export interface IState {
@@ -18,7 +18,8 @@ export interface IState {
   background?: ColorTypes['colors'];
   dotColor?: ColorTypes['colors'];
   eyeColor?: ColorTypes['colors'];
-  value: IProps['value'];
+  value?: string;
+  logoImage: File | string | undefined;
 }
 
 type Actions =
@@ -28,16 +29,18 @@ type Actions =
   | 'SET_QR_BACKGROUND'
   | 'SET_QR_DOT_COLOR'
   | 'SET_QR_EYE_COLOR'
+  | 'SET_QR_LOGO_IMAGE'
   | `SET_QR_${string}`;
 export interface IAction {
   type: Actions;
   payload: {
     style?: CornerSquareType;
-    value?: IProps['value'];
+    value?: string;
     dotType?: DotType;
     background?: ColorTypes['colors'];
     dotColor?: ColorTypes['colors'];
     eyeColor?: ColorTypes['colors'];
+    logoImage?: File | string;
   };
 }
 
@@ -85,6 +88,11 @@ const reducer = (state: IState, action: IAction) => {
       return {
         ...state,
         eyeColor: action.payload.eyeColor,
+      };
+    case 'SET_QR_LOGO_IMAGE':
+      return {
+        ...state,
+        logoImage: action.payload.logoImage,
       };
     default:
       return state;

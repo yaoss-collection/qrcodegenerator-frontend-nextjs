@@ -16,13 +16,23 @@ import QRCodeStyling, {
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
 const QRCode = () => {
-  const { state } = useContext(QrStyleContext);
+  const { dispatch, state } = useContext(QrStyleContext);
+
+  const toBase64 = (file: File) => {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const [options] = useState<Options>({
-    width: 215,
-    height: 215,
+    width: 235,
+    height: 235,
     type: 'svg' as DrawType,
     data: `${state.value}`,
-    image: '/favicon.ico',
+    image: '',
     margin: 10,
     qrOptions: {
       typeNumber: 0 as TypeNumber,
@@ -32,7 +42,7 @@ const QRCode = () => {
     imageOptions: {
       hideBackgroundDots: true,
       imageSize: 0.4,
-      margin: 20,
+      margin: 5,
       crossOrigin: 'anonymous',
     },
     dotsOptions: {
@@ -63,6 +73,19 @@ const QRCode = () => {
 
   useEffect(() => {
     if (!qrCode) return;
+    if (state.logoImage) {
+      if (typeof state.logoImage === 'string') {
+        qrCode.update({
+          image: state.logoImage,
+        });
+      } else {
+        toBase64(state.logoImage).then((res) => {
+          qrCode.update({
+            image: res,
+          });
+        });
+      }
+    }
     qrCode.update({
       data: `${state.value}`,
       cornersSquareOptions: {
@@ -89,6 +112,7 @@ const QRCode = () => {
     state.dotColor,
     state.eyeColor,
     state.value,
+    state.logoImage,
   ]);
 
   // const onDataChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -109,6 +133,15 @@ const QRCode = () => {
   //   });
   // };
 
+  const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    dispatch({
+      type: 'SET_QR_LOGO_IMAGE',
+      payload: { logoImage: file },
+    });
+  };
+
   return (
     <>
       <div className={'mx-auto flex justify-center pb-5 lg:px-12'} ref={ref} />
@@ -117,6 +150,9 @@ const QRCode = () => {
       </Details>
       <Details title={'Colors'}>
         <ColorsTabs />
+      </Details>
+      <Details title={'Logo'}>
+        <input type={'file'} onChange={onFileUpload} />
       </Details>
       {/* <button className={'text-lg'} onClick={onDownloadClick}>*/}
       {/*  Download*/}
