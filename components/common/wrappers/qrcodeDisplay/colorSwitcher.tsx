@@ -1,10 +1,24 @@
 import { Button } from '@/common/wrappers/qrcodeDisplay/details';
-import { ColorTypes, colorNames } from '@/context/colorTypes';
+import { ColorTypes } from '@/context/colorTypes';
 import { IAction, QrStyleContext } from '@/context/index';
 import React, { useContext, useMemo } from 'react';
 
 type BackgroundColorsProps = {
   change: 'background' | 'dotColor' | 'eyeColor';
+};
+
+const colorNames: Record<ColorTypes['colors'], ColorTypes['colorNames']> = {
+  transparent: 'Transparent',
+  '#1F2937': 'Gray',
+  '#9B2C2C': 'Red',
+  '#D97706': 'Yellow',
+  '#22543D': 'Green',
+  '#1D4ED8': 'Blue',
+  '#4F46E5': 'Indigo',
+  '#7C3AED': 'Purple',
+  '#E11D8F': 'Pink',
+  '#FFFFFF': 'White',
+  '#000000': 'Black',
 };
 
 const ColorSwitcher = ({ change }: BackgroundColorsProps) => {
