@@ -41,3 +41,7 @@ export interface ICommon {
 export interface Github {
   stars: number;
 }
+
+export type InputProps = {
+  typeOfInput: 'text' | 'url' | 'email' | 'tel' | 'vCard' | 'wifi' | 'sms';
+};

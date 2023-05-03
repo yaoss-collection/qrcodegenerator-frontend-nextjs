@@ -1,24 +1,50 @@
-import { CornerSquareType } from 'qr-code-styling';
+import { ColorTypes } from '@/context/colorTypes';
+import { CornerSquareType, DotType } from 'qr-code-styling';
 import React, { createContext, useMemo, useReducer } from 'react';
-import { IProps } from 'react-qrcode-logo';
 
 const initialState: IState = {
   style: 'square',
+  dotType: 'square',
+  background: 'transparent',
+  dotColor: '#FFFFFF',
+  eyeColor: '#FFFFFF',
   value: "I'm EMPTY",
+  logoImage: '',
 };
 
-interface IState {
+export interface IState {
   style?: CornerSquareType;
-  value: IProps['value'];
+  dotType?: DotType;
+  background?: ColorTypes['colors'];
+  dotColor?: ColorTypes['colors'];
+  eyeColor?: ColorTypes['colors'];
+  value?: string;
+  logoImage: File | string | undefined;
 }
 
-type Actions = 'SET_QR_STYLE' | 'SET_QR_VALUE';
-interface IAction {
+type Actions =
+  | 'SET_QR_STYLE'
+  | 'SET_QR_VALUE'
+  | 'SET_QR_DOT_TYPE'
+  | 'SET_QR_BACKGROUND'
+  | 'SET_QR_DOT_COLOR'
+  | 'SET_QR_EYE_COLOR'
+  | 'SET_QR_LOGO_IMAGE'
+  | `SET_QR_${string}`;
+export interface IAction {
   type: Actions;
-  payload: { style?: CornerSquareType; value?: IProps['value'] };
+  payload: {
+    style?: CornerSquareType;
+    value?: string;
+    dotType?: DotType;
+    background?: ColorTypes['colors'];
+    dotColor?: ColorTypes['colors'];
+    eyeColor?: ColorTypes['colors'];
+    logoImage?: File | string;
+  };
 }
 
-interface IContextProps {
+export interface IContextProps {
   state: IState;
   dispatch: React.Dispatch<IAction>;
 }
@@ -36,11 +62,37 @@ const reducer = (state: IState, action: IAction) => {
       return {
         ...state,
         style: action.payload.style,
+        dotType: action.payload.dotType,
       };
     case 'SET_QR_VALUE':
       return {
         ...state,
         value: action.payload.value,
+      };
+    case 'SET_QR_DOT_TYPE':
+      return {
+        ...state,
+        dotType: action.payload.dotType,
+      };
+    case 'SET_QR_BACKGROUND':
+      return {
+        ...state,
+        background: action.payload.background,
+      };
+    case 'SET_QR_DOTCOLOR':
+      return {
+        ...state,
+        dotColor: action.payload.dotColor,
+      };
+    case 'SET_QR_EYECOLOR':
+      return {
+        ...state,
+        eyeColor: action.payload.eyeColor,
+      };
+    case 'SET_QR_LOGO_IMAGE':
+      return {
+        ...state,
+        logoImage: action.payload.logoImage,
       };
     default:
       return state;

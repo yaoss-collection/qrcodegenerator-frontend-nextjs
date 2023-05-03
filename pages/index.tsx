@@ -12,7 +12,7 @@ const Home: NextPage<{ seo: ICommon['seo'] }> = () => {
   return (
     <main>
       <Seo seo={seo} />
-      <Title title={'Enter your text'} />
+      <Title title={'Enter your text'} typeOfInput={'text'} />
     </main>
   );
 };

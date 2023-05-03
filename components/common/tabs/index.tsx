@@ -2,11 +2,12 @@ import { EmailSvg } from '@/common/svgs/emailSvg';
 import { TextSvg } from '@/common/svgs/textSvg';
 import { VCardSvg } from '@/common/svgs/vCardSvg';
 import { WifiSvg } from '@/common/svgs/wifiSvg';
+import { QrStyleContext } from '@/context/index';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 interface Tab {
   icon: React.ReactNode;
@@ -19,6 +20,7 @@ type TabProps = {
 };
 
 const Layout = ({ children }: TabProps) => {
+  const { dispatch } = useContext(QrStyleContext);
   const tabsData: Tab[] = useMemo(
     () => [
       {
@@ -51,7 +53,7 @@ const Layout = ({ children }: TabProps) => {
 
   const tabsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
-  const { pathname, events } = useRouter();
+  const { pathname } = useRouter();
 
   useEffect(() => {
     const initialActiveTabIndex = tabsData.findIndex((tab) => tab.href === pathname);
@@ -67,11 +69,12 @@ const Layout = ({ children }: TabProps) => {
           left: currentTab?.offsetLeft ?? 0,
         },
       }));
+      dispatch({ type: 'SET_QR_VALUE', payload: { value: "I'm EMPTY" } });
     }
-  }, [pathname, tabsData]);
+  }, [pathname, tabsData, dispatch]);
 
   useEffect(() => {
-    function setTabPosition() {
+    const handleResize = () => {
       const currentTab = tabsRef.current[state.activeTabIndex];
       setState((prevState) => ({
         ...prevState,
@@ -82,17 +85,14 @@ const Layout = ({ children }: TabProps) => {
           left: currentTab?.offsetLeft ?? 0,
         },
       }));
-    }
+    };
 
-    events.on('routeChangeComplete', setTabPosition);
-
-    window.addEventListener('resize', setTabPosition);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      events.off('routeChangeComplete', setTabPosition);
-      window.removeEventListener('resize', setTabPosition);
+      window.removeEventListener('resize', handleResize);
     };
-  }, [state.activeTabIndex, events]);
+  }, [state.activeTabIndex]);
 
   return (
     <div
@@ -102,7 +102,7 @@ const Layout = ({ children }: TabProps) => {
     >
       <nav
         className={
-          'scrolling-auto flex h-full max-w-full snap-x flex-row overflow-x-auto rounded-full border border-gray-100 bg-white shadow-md lg:ml-14 lg:mt-14 lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6'
+          'scrolling-auto flex h-full max-w-full snap-x flex-row overflow-x-auto rounded-full border border-gray-100 bg-white shadow-md lg:ml-14 lg:mt-14 lg:min-w-[5.5rem] lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6'
         }
       >
         <div className={'relative flex-none'}>
