@@ -1,3 +1,4 @@
+import { DownloadSvg } from '@/common/svgs/downloadSvg';
 import Details from '@/common/wrappers/qrcodeDisplay/details';
 import FileInput from '@/common/wrappers/qrcodeDisplay/inputFile';
 import ShapesSwitcher from '@/common/wrappers/qrcodeDisplay/shapesSwitcher';
@@ -10,6 +11,7 @@ import QRCodeStyling, {
   DotType,
   DrawType,
   ErrorCorrectionLevel,
+  FileExtension,
   Mode,
   Options,
   TypeNumber,
@@ -62,7 +64,6 @@ const QRCode = () => {
       type: `${state.style}` as CornerDotType,
     },
   });
-  // const [fileExt, setFileExt] = useState('svg');
   const [qrCode] = useState<QRCodeStyling>(new QRCodeStyling(options));
   const ref = useRef<HTMLDivElement>(null);
 
@@ -121,23 +122,21 @@ const QRCode = () => {
     state.logoImage,
   ]);
 
-  // const onDataChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setOptions((options) => ({
-  //     ...options,
-  //     data: event.target.value,
-  //   }));
-  // };
-  //
-  // const onExtensionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-  //   setFileExt(event.target.value);
-  // };
+  const onDownloadClickSvg = () => {
+    if (!qrCode) return;
+    qrCode.download({
+      extension: 'svg' as FileExtension,
+      name: 'qr-code',
+    });
+  };
 
-  // const onDownloadClick = () => {
-  //   if (!qrCode) return;
-  //   qrCode.download({
-  //     extension: fileExt as FileExtension,
-  //   });
-  // };
+  const onDownloadClickPng = () => {
+    if (!qrCode) return;
+    qrCode.download({
+      extension: 'png' as FileExtension,
+      name: 'qr-code',
+    });
+  };
 
   return (
     <>
@@ -151,9 +150,34 @@ const QRCode = () => {
       <Details title={'Logo'}>
         <FileInput />
       </Details>
-      {/* <button className={'text-lg'} onClick={onDownloadClick}>*/}
-      {/*  Download*/}
-      {/* </button>*/}
+      <div
+        className={
+          'mt-5 flex w-full flex-col items-center justify-between gap-x-5 rounded-lg px-6 py-5 text-left text-sm text-white lg:flex-row'
+        }
+      >
+        <button
+          className={
+            'flex w-full items-center justify-center rounded-full bg-download-blue px-2 py-5 text-white transition-all duration-300 ease-in-out'
+          }
+          onClick={onDownloadClickPng}
+        >
+          <span className={'mr-2 w-6'}>
+            <DownloadSvg />
+          </span>
+          PNG
+        </button>
+        <button
+          className={
+            'flex w-full items-center justify-center rounded-full bg-download-orange px-2 py-5 text-white transition-all duration-300 ease-in-out'
+          }
+          onClick={onDownloadClickSvg}
+        >
+          <span className={'mr-2 w-6'}>
+            <DownloadSvg />
+          </span>
+          SVG
+        </button>
+      </div>
     </>
   );
 };
