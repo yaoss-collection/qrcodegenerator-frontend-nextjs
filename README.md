@@ -23,7 +23,7 @@ To run the project locally, you will need to have Node.js and npm installed. Onc
 
 2. Navigate into the project directory:
 
-```cd qr-code-generator```
+```cd qrcodegenerator-frontend-nextjs```
 
 3. Install the dependencies:
 
