@@ -8,6 +8,8 @@ module.exports = {
         'secondary-light': '#113a9f',
         'blue-light': '#1e49b3',
         light: '#b0c6e2',
+        'download-blue': '#3dbcf9',
+        'download-orange': '#ff9b05',
       },
       fontFamily: {
         'spline-sans': ['Spline Sans', 'sans-serif'],

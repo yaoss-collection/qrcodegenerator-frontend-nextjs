@@ -67,7 +67,7 @@ const reducer = (state: IState, action: IAction) => {
     case 'SET_QR_VALUE':
       return {
         ...state,
-        value: action.payload.value,
+        value: action.payload.value?.slice(0, 1000),
       };
     case 'SET_QR_DOT_TYPE':
       return {
