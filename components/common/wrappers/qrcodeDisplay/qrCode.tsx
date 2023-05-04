@@ -1,5 +1,5 @@
-import { DownloadSvg } from '@/common/svgs/downloadSvg';
 import Details from '@/common/wrappers/qrcodeDisplay/details';
+import DownloadButton from '@/common/wrappers/qrcodeDisplay/downloadButton';
 import FileInput from '@/common/wrappers/qrcodeDisplay/inputFile';
 import ShapesSwitcher from '@/common/wrappers/qrcodeDisplay/shapesSwitcher';
 import { ColorsTabs } from '@/common/wrappers/qrcodeDisplay/tabs/colorsTabs';
@@ -73,6 +73,22 @@ const QRCode = () => {
     }
   }, [qrCode, ref]);
 
+  const onDownloadClickSvg = () => {
+    if (!qrCode) return;
+    qrCode.download({
+      extension: 'svg' as FileExtension,
+      name: 'qr-code',
+    });
+  };
+
+  const onDownloadClickPng = () => {
+    if (!qrCode) return;
+    qrCode.download({
+      extension: 'png' as FileExtension,
+      name: 'qr-code',
+    });
+  };
+
   useEffect(() => {
     if (!qrCode) return;
     if (state.logoImage) {
@@ -122,22 +138,6 @@ const QRCode = () => {
     state.logoImage,
   ]);
 
-  const onDownloadClickSvg = () => {
-    if (!qrCode) return;
-    qrCode.download({
-      extension: 'svg' as FileExtension,
-      name: 'qr-code',
-    });
-  };
-
-  const onDownloadClickPng = () => {
-    if (!qrCode) return;
-    qrCode.download({
-      extension: 'png' as FileExtension,
-      name: 'qr-code',
-    });
-  };
-
   return (
     <>
       <div className={'mx-auto flex justify-center pb-5 lg:px-12'} ref={ref} />
@@ -150,34 +150,10 @@ const QRCode = () => {
       <Details title={'Logo'}>
         <FileInput />
       </Details>
-      <div
-        className={
-          'mt-5 flex w-full flex-col items-center justify-between gap-x-5 rounded-lg px-6 py-5 text-left text-sm text-white lg:flex-row'
-        }
-      >
-        <button
-          className={
-            'flex w-full items-center justify-center rounded-full bg-download-blue px-2 py-5 text-white transition-all duration-300 ease-in-out'
-          }
-          onClick={onDownloadClickPng}
-        >
-          <span className={'mr-2 w-6'}>
-            <DownloadSvg />
-          </span>
-          PNG
-        </button>
-        <button
-          className={
-            'flex w-full items-center justify-center rounded-full bg-download-orange px-2 py-5 text-white transition-all duration-300 ease-in-out'
-          }
-          onClick={onDownloadClickSvg}
-        >
-          <span className={'mr-2 w-6'}>
-            <DownloadSvg />
-          </span>
-          SVG
-        </button>
-      </div>
+      <DownloadButton
+        onDownloadClickPng={onDownloadClickPng}
+        onDownloadClickSvg={onDownloadClickSvg}
+      />
     </>
   );
 };
