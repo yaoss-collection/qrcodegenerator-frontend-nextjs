@@ -10,7 +10,7 @@ const DownloadButton = ({ onDownloadClickSvg, onDownloadClickPng }: DownloadButt
   return (
     <div
       className={
-        'mt-5 flex w-full flex-col items-center justify-between gap-x-5 rounded-lg px-6 py-5 text-left text-sm text-white lg:flex-row'
+        'mt-5 flex w-full flex-col items-center justify-between gap-5 gap-x-5 rounded-lg px-6 py-5 text-left text-sm text-white lg:flex-row'
       }
     >
       <button

@@ -12,7 +12,7 @@ const QrCodeWrapper = () => {
     setIsMounted(true);
   }, []);
   return (
-    <div className="mx-auto flex w-11/12 flex-col items-center justify-center rounded-2xl bg-secondary px-14 py-16 font-spline-sans lg:mx-0 lg:min-h-[471px] lg:w-auto lg:min-w-[423px] lg:max-w-[423px]">
+    <div className="mx-auto flex w-11/12 flex-col justify-center rounded-2xl bg-secondary px-14 py-16 font-spline-sans md:min-w-[423px] md:max-w-[423px] lg:mx-0 lg:min-h-[471px] lg:w-auto">
       <Transition
         enter={'transition duration-100 ease-out'}
         enterFrom={'transform translate-y-1/4 opacity-100'}
