@@ -97,12 +97,12 @@ const Layout = ({ children }: TabProps) => {
   return (
     <div
       className={
-        'mx-auto flex max-w-7xl flex-col bg-primary pt-24 font-spline-sans text-6xl font-medium text-secondary lg:flex-row'
+        'mx-auto flex max-w-7xl flex-col-reverse bg-primary pb-24 align-middle font-spline-sans text-6xl font-medium text-secondary md:flex-row md:pt-12'
       }
     >
       <nav
         className={
-          'scrolling-auto flex h-full max-w-full snap-x flex-row overflow-x-auto rounded-full border border-gray-100 bg-white shadow-md lg:ml-14 lg:mt-14 lg:min-w-[5.5rem] lg:max-w-[5.5rem] lg:flex-col lg:overflow-x-hidden lg:overflow-y-hidden lg:px-4 lg:py-6'
+          'scrolling-auto fixed bottom-4 z-50 flex max-w-full snap-x flex-row justify-center self-center overflow-x-auto overflow-y-hidden rounded-full border border-gray-100 bg-white px-3 py-3 shadow-md md:static md:ml-14 md:mt-14 md:flex-col md:self-start md:overflow-x-hidden md:overflow-y-hidden lg:min-w-[5.5rem] lg:max-w-[5.5rem] lg:px-4 lg:py-6'
         }
       >
         <div className={'relative flex-none'}>
@@ -129,7 +129,7 @@ const Layout = ({ children }: TabProps) => {
               boxShadow: 'rgba(0, 40, 138, 0.52) 0px 11px 25px -2px',
             }}
           />
-          <div className={'mx-auto flex flex-row space-x-3 lg:flex-col lg:space-x-0 lg:space-y-3'}>
+          <div className={'mx-auto flex flex-row space-x-3 md:flex-col md:space-x-0 md:space-y-3'}>
             {tabsData.map((tab, idx) => {
               return (
                 <Link
@@ -138,7 +138,7 @@ const Layout = ({ children }: TabProps) => {
                   ref={(el) => (tabsRef.current[idx] = el)}
                   id={tab.id}
                   className={clsx(
-                    'flex items-center justify-center rounded-full p-10 transition-colors duration-300 ease-in-out lg:p-4',
+                    'flex items-center justify-center rounded-full p-4 transition-colors duration-300 ease-in-out',
                     pathname === tab.href || state.activeTabIndex === idx
                       ? 'z-50 animate-pulse-once font-bold text-white'
                       : 'font-medium'
@@ -152,7 +152,7 @@ const Layout = ({ children }: TabProps) => {
           </div>
         </div>
       </nav>
-      <main className={'ml-0 lg:ml-20'}>{children}</main>
+      <main className={'md:mx-auto'}>{children}</main>
     </div>
   );
 };

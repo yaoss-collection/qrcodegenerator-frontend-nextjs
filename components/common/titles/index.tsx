@@ -3,5 +3,7 @@ type TitlesProps = {
 };
 
 export const H1 = ({ title }: TitlesProps) => {
-  return <h1 className="font-spline-sans text-6xl font-medium text-secondary">{title}</h1>;
+  return (
+    <h1 className="font-spline-sans text-4xl font-medium text-secondary lg:text-6xl">{title}</h1>
+  );
 };
