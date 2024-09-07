@@ -16,7 +16,7 @@ import QRCodeStyling, {
   Options,
   TypeNumber,
 } from 'qr-code-styling';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 const QRCode = () => {
   const { state } = useContext(QrStyleContext);
@@ -140,7 +140,7 @@ const QRCode = () => {
 
   return (
     <>
-      <div className={'mx-auto flex justify-center pb-5 lg:px-12'} ref={ref} />
+      <div className={'mx-auto flex justify-center pb-5'} ref={ref} />
       <Details title={'Shape'}>
         <ShapesSwitcher />
       </Details>
