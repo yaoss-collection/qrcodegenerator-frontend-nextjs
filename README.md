@@ -51,3 +51,6 @@ Please make sure to include tests for any new features or bug fixes.
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
+<!-- Security scan triggered at 2025-09-02 03:57:03 -->
